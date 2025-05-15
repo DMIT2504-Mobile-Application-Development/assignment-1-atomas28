@@ -17,7 +17,7 @@ Future<dynamic> getWeatherForCity({required String city}) async{
     // There was a problem with the request: status <status code> received
     if(response.statusCode != 200)
     {
-      throw Exception("There was a problem with the reQuest: status ${response.statusCode} received");
+      throw Exception("There was a problem with the request: status ${response.statusCode} received");
     }
     else
       {
@@ -30,6 +30,6 @@ Future<dynamic> getWeatherForCity({required String city}) async{
   }
   catch(error)
   {
-    throw Exception('There was a problem with the reQuest: $error');
+    throw Exception('There was a problem with the request: $error');
   }
 }

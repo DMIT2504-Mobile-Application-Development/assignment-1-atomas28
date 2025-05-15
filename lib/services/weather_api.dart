@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
@@ -8,16 +9,27 @@ const String currentWeatherEndpoint = 'https://api.openweathermap.org/data/2.5/w
 Future<dynamic> getWeatherForCity({required String city}) async{
   //Use the currentWeatherEndpoint from the previous step above to create the full URL
   final String url = '$currentWeatherEndpoint/?units=metric&q=$city&appid=$weatherApiKey';
-  final response = await http.get(Uri.parse(url));
 
-  //todo: If status code is anything other than 200, throw an EXCEPTION with the message:
-  // There was a problem with the request: status <status code> received
-  if(response.statusCode != 200)
+  try{
+    final response = await http.get(Uri.parse(url));
+
+    //todo: If status code is anything other than 200, throw an EXCEPTION with the message:
+    // There was a problem with the request: status <status code> received
+    if(response.statusCode != 200)
     {
-      throw Exception("There was a problem with the request: status ${response.statusCode} received");
+      throw Exception("There was a problem with the reQuest: status ${response.statusCode} received");
     }
+    else
+      {
+        return jsonDecode(response.body);
+      }
 
 
-
-
+    //todo: If an exception occurs when accessing the endpoint, throw an Exception with the message:
+    // There was a problem with the request: <original exception message>. MIGHT NEED TRY CATCH
+  }
+  catch(error)
+  {
+    throw Exception('There was a problem with the reQuest: $error');
+  }
 }

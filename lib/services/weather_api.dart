@@ -12,6 +12,12 @@ Future<dynamic> getWeatherForCity({required String city}) async{
 
   //todo: If status code is anything other than 200, throw an EXCEPTION with the message:
   // There was a problem with the request: status <status code> received
+  if(response.statusCode != 200)
+    {
+      throw Exception("There was a problem with the request: status ${response.statusCode} received");
+    }
+
+
 
 
 }

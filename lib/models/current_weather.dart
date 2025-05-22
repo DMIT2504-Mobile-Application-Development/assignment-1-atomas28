@@ -10,15 +10,24 @@ class CurrentWeather{
 
   //todo: Generative Constructor:
   CurrentWeather({required String city, required String description, required double currentTemp, required DateTime currentTime, required DateTime sunrise, required DateTime sunset}){
-    this.city = city;
-    this.description = description;
-    this.currentTemp = currentTemp;
-    this.currentTime = currentTime;
-    this.sunrise = sunrise;
-    this.sunset = sunset;
+    _city = city;
+    _description = description;
+    _currentTemp = currentTemp;
+    _currentTime = currentTime;
+    _sunrise = sunrise;
+    _sunset = sunset;
   }
-  
 
+
+  //todo: Factory Constructor - parses OpenWeather API data:
+  //https://openweathermap.org/current use this to figure out how to parse
+  factory CurrentWeather.fromOpenWeatherData(data){
+    return CurrentWeather(city: data['name'], description: data['weather'][0]['description'], currentTemp: data['main']['temp'],
+       currentTime: DateTime.now(),
+       sunrise: data['sys']['sunrise'],
+       sunset: data['sys']['sunset']
+    );
+  }
 
 
 
@@ -74,6 +83,9 @@ class CurrentWeather{
     }
     _currentTime = value;
   }
+  
+  
+  
 
 
   //todo: GETTER AND SETTER + Exception for "sunrise"
@@ -84,7 +96,7 @@ class CurrentWeather{
     if(value.day != _currentTime.day){
       throw Exception('Sunrise must be on the same day as current time');
     }
-    if(value.isAfter(_sunset)){
+    if(value.isAfter(sunset)){
       throw Exception('Sunrise cannot be after sunset');
     }
     _sunrise = value;
@@ -98,21 +110,16 @@ class CurrentWeather{
     if(value.day != _currentTime.day){
       throw Exception('Sunset must be on the same day as current time');
     }
-    if(value.isBefore(_sunrise)){
+    if(value.isBefore(sunrise)){
       throw Exception('Sunset cannot be before sunrise');
     }
     _sunset = value;
   }
 
+  @override String toString(){
+    return 'City: $_city, Description: $_description, Current Temperature: $_currentTemp, Current Time: $_currentTime, Sunrise: $_sunrise, Sunset: $_sunset';
 
-
-
-
-
-
-
-
-
+  }
 }
 
 

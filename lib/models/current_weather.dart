@@ -8,8 +8,8 @@ class CurrentWeather{
   late DateTime _sunrise;
   late DateTime _sunset;
 
-
-  CurrentWeather(String city, String description, double currentTemp, DateTime currentTime, DateTime sunrise, DateTime sunset){
+  //todo: Generative Constructor:
+  CurrentWeather({required String city, required String description, required double currentTemp, required DateTime currentTime, required DateTime sunrise, required DateTime sunset}){
     this.city = city;
     this.description = description;
     this.currentTemp = currentTemp;
@@ -17,6 +17,10 @@ class CurrentWeather{
     this.sunrise = sunrise;
     this.sunset = sunset;
   }
+  
+
+
+
 
   //todo: GETTER AND SETTER + EXCEPTION FOR "city"
   String get city{
@@ -92,7 +96,7 @@ class CurrentWeather{
   }
   set sunset(DateTime value){
     if(value.day != _currentTime.day){
-      throw Exception('Sunset msut be on the same day as current time');
+      throw Exception('Sunset must be on the same day as current time');
     }
     if(value.isBefore(_sunrise)){
       throw Exception('Sunset cannot be before sunrise');

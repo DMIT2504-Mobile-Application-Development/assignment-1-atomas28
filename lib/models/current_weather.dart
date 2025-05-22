@@ -11,6 +11,11 @@ class CurrentWeather{
 
   CurrentWeather(String city, String description, double currentTemp, DateTime currentTime, DateTime sunrise, DateTime sunset){
     this.city = city;
+    this.description = description;
+    this.currentTemp = currentTemp;
+    this.currentTime = currentTime;
+    this.sunrise = sunrise;
+    this.sunset = sunset;
   }
 
   //todo: GETTER AND SETTER + EXCEPTION FOR "city"
@@ -50,17 +55,57 @@ class CurrentWeather{
     }
     _currentTemp = value;
   }
-  
+
   //todo: GETTER AND SETTER + Exception for "currentTime" (I'm assuming - github says "currentTemp") must ensure currentTime is not in the future
+
   DateTime get currentTime{
     return _currentTime;
   }
 
   set currentTime(DateTime value){
-    if(value > DateTime.now()){
+    //https://api.flutter.dev/flutter/dart-core/DateTime/isAfter.html - try isAfter
+    //before- if(value > DateTime.now())
+    if(value.isAfter(DateTime.now())){
       throw Exception('Current time cannot be in the future');
     }
+    _currentTime = value;
   }
+
+
+  //todo: GETTER AND SETTER + Exception for "sunrise"
+  DateTime get sunrise{
+    return _sunrise;
+  }
+  set sunrise(DateTime value){
+    if(value.day != _currentTime.day){
+      throw Exception('Sunrise must be on the same day as current time');
+    }
+    if(value.isAfter(_sunset)){
+      throw Exception('Sunrise cannot be after sunset');
+    }
+    _sunrise = value;
+  }
+
+  //todo: GETTER AND SETTER + Exception for "sunset"
+  DateTime get sunset{
+    return _sunset;
+  }
+  set sunset(DateTime value){
+    if(value.day != _currentTime.day){
+      throw Exception('Sunset msut be on the same day as current time');
+    }
+    if(value.isBefore(_sunrise)){
+      throw Exception('Sunset cannot be before sunrise');
+    }
+    _sunset = value;
+  }
+
+
+
+
+
+
+
 
 
 

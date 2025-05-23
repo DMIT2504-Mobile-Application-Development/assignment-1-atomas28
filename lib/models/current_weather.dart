@@ -23,9 +23,13 @@ class CurrentWeather{
   //https://openweathermap.org/current use this to figure out how to parse
   factory CurrentWeather.fromOpenWeatherData(data){
     return CurrentWeather(city: data['name'], description: data['weather'][0]['description'], currentTemp: data['main']['temp'],
-       currentTime: DateTime.now(),
-       sunrise: DateTime.fromMicrosecondsSinceEpoch(data['sys']['sunrise']) ,
-       sunset: DateTime.fromMicrosecondsSinceEpoch(data['sys']['sunset'])
+       //expect different date - don't use DateTime.now()
+       //  https://api.dart.dev/dart-core/DateTime/DateTime.fromMillisecondsSinceEpoch.html - USE THIS!!!
+       currentTime: DateTime.fromMillisecondsSinceEpoch(data['dt'].toInt()*1000),
+       sunrise: DateTime.fromMillisecondsSinceEpoch(data['sys']['sunrise'].toInt()*1000),
+       sunset: DateTime.fromMillisecondsSinceEpoch(data['sys']['sunset'].toInt()*1000)
+
+
     );
   }
 

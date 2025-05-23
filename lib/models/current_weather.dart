@@ -24,8 +24,8 @@ class CurrentWeather{
   factory CurrentWeather.fromOpenWeatherData(data){
     return CurrentWeather(city: data['name'], description: data['weather'][0]['description'], currentTemp: data['main']['temp'],
        currentTime: DateTime.now(),
-       sunrise: data['sys']['sunrise'],
-       sunset: data['sys']['sunset']
+       sunrise: DateTime.fromMicrosecondsSinceEpoch(data['sys']['sunrise']) ,
+       sunset: DateTime.fromMicrosecondsSinceEpoch(data['sys']['sunset'])
     );
   }
 
